@@ -24,12 +24,12 @@ Babel all day and all night (gotta love writting javascript that compiles to... 
 		|___ data
 		|___ reducers
 		|___ index.js
-    
-  * -- api
-    |___ websockets
-    |___ data
-    |___ routes
-    |___ index.js
+
+	* -- api
+		|___ socket
+		|___ data
+		|___ routes
+		|___ index.js
 
 
 ## TEST FILES
