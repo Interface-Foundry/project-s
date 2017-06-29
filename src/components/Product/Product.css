@@ -1,0 +1,37 @@
+.product {
+    margin: 0;
+    overflow: auto;
+}
+
+.product__price {
+    display: inline-block;
+    line-height: 34px;
+}
+
+.product__button-wrap {
+    float: right;
+}
+
+.product__button-wrap button {
+    height: 34px;
+    line-height: 34px;
+    padding: 0 10px;
+}
+
+.product__quantity-wrap {
+    float: right;
+}
+
+.product__quantity-wrap label {
+	height: 34px;
+    line-height: 34px;
+}
+
+.product__quantity {
+	height: 34px;
+	line-height: 34px;
+	margin: 0 10px;
+	float: right;
+	padding: 0 10px;
+	width: 70px;
+}

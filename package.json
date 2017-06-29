@@ -1,0 +1,61 @@
+{
+  "name": "stride-test",
+  "version": "0.1.0",
+  "homepage": "",
+  "private": true,
+  "scripts": {
+    "start": "webpack --progress --config webpack/webpack.config.js && NODE_ENV=development node webpack/webpack-dev-server.js",
+    "test": "karma start"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "latest",
+      "stage-0",
+      "react"
+    ]
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "^3.2.0",
+    "babel-cli": "^6.16.0",
+    "babel-core": "^6.8.0",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-latest": "^6.16.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "css-loader": "^0.25.0",
+    "enzyme": "^2.7.1",
+    "expect": "^1.20.2",
+    "express": "^4.13.4",
+    "file-loader": "^0.9.0",
+    "jasmine": "^2.5.3",
+    "jasmine-core": "^2.5.2",
+    "json-loader": "^0.5.4",
+    "karma": "^1.5.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^2.0.2",
+    "react-addons-test-utils": "^15.4.2",
+    "react-hot-loader": "^3.0.0-beta.3",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.10.0"
+  },
+  "dependencies": {
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.0.1",
+    "redux-thunk": "^2.1.0",
+    "request": "^2.79.0"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  }
+}

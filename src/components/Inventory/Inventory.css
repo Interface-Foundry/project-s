@@ -1,0 +1,44 @@
+.inventory-list {
+	display: inline-block;
+	position: relative;
+	width: 85%;
+	padding: 10px;
+}
+.inventory-list__item {
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #e3e3e3;
+	background: white;
+	margin: 0 0 10px;
+	padding: 10px;
+}
+.inventory-list__item:last-of-type {
+	margin: 0 0;
+}
+.action-block {
+	display: inline-block;
+	width: 15%;
+	padding: 10px
+}
+.action-block button {
+	cursor: pointer;
+	background: white;
+	border: 1px solid #e3e3e3;
+}
+
+@media (max-width: 500px) {
+	.inventory-list {
+		width: 100%;
+	}
+
+	.action-block {
+	    position: fixed;
+	    top: 0;
+	    right: 10px;
+	    display: inline-block;
+	    width: 100px;
+	    padding: 10px;
+	    font-size: 10px;
+	}
+
+}
