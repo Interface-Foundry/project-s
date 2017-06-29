@@ -1,6 +1,8 @@
 ## Project - S
 
-React, Redux, Webpack implementation.
+Node, Express, Socket.
+
+React, Redux, Webpack.
 
 Karma, Jasmine, Enzyme (airBnB's pretty awesome react specific testing library)
 
