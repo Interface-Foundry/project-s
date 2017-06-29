@@ -8,6 +8,7 @@ import getClientId from './socket/client_id';
 import remoteActionMiddleware from './socket/remote_action_middleware';
 import App from './components/App';
 import inventoryData from './data/inventory';
+import { setState, setClientId } from './actions';
 
 const socket = io(`${location.protocol}//${location.hostname}:8090`);
 socket.on('state', state =>
@@ -20,6 +21,7 @@ const createStoreWithMiddleware = applyMiddleware(
 )(createStore);
 
 const store = createStoreWithMiddleware(rootReducer);
+store.dispatch(setClientId(getClientId()));
 
 render(
     <Provider store={store}>

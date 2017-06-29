@@ -67,7 +67,7 @@
 
 	var _socket2 = _interopRequireDefault(_socket);
 
-	var _reducers = __webpack_require__(269);
+	var _reducers = __webpack_require__(268);
 
 	var _reducers2 = _interopRequireDefault(_reducers);
 
@@ -87,24 +87,20 @@
 
 	var _inventory2 = _interopRequireDefault(_inventory);
 
+	var _actions = __webpack_require__(292);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var socket = (0, _socket2.default)(location.protocol + '//' + location.hostname + ':8090');
 	socket.on('state', function (state) {
-	  return store.dispatch(setState(state));
-	});
-
-	// General Socket Listeners
-	['connect', 'connect_error', 'connect_timeout', 'reconnect', 'reconnecting', 'reconnect_error', 'reconnect_failed'].forEach(function (ev) {
-	  return socket.on(ev, function () {
-	    return store.dispatch(setConnectionState(ev, socket.connected));
-	  });
+	  return store.dispatch((0, _actions.setState)(state));
 	});
 
 	// Create Store With Websocket Middleware to allow for Remote Redux catch.
 	var createStoreWithMiddleware = (0, _redux.applyMiddleware)((0, _remote_action_middleware2.default)(socket))(_redux.createStore);
 
 	var store = createStoreWithMiddleware(_reducers2.default);
+	store.dispatch((0, _actions.setClientId)((0, _client_id2.default)()));
 
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRedux.Provider,
@@ -24716,7 +24712,7 @@
 	 */
 
 	exports.Manager = __webpack_require__(238);
-	exports.Socket = __webpack_require__(264);
+	exports.Socket = __webpack_require__(263);
 
 
 /***/ }),
@@ -26248,14 +26244,14 @@
 	 */
 
 	var eio = __webpack_require__(239);
-	var Socket = __webpack_require__(264);
+	var Socket = __webpack_require__(263);
 	var Emitter = __webpack_require__(232);
 	var parser = __webpack_require__(231);
-	var on = __webpack_require__(266);
-	var bind = __webpack_require__(267);
+	var on = __webpack_require__(265);
+	var bind = __webpack_require__(266);
 	var debug = __webpack_require__(228)('socket.io-client:manager');
-	var indexOf = __webpack_require__(262);
-	var Backoff = __webpack_require__(268);
+	var indexOf = __webpack_require__(261);
+	var Backoff = __webpack_require__(267);
 
 	/**
 	 * IE6+ hasOwnProperty
@@ -26850,13 +26846,13 @@
 	 */
 
 	var transports = __webpack_require__(242);
-	var Emitter = __webpack_require__(255);
+	var Emitter = __webpack_require__(232);
 	var debug = __webpack_require__(228)('engine.io-client:socket');
-	var index = __webpack_require__(262);
+	var index = __webpack_require__(261);
 	var parser = __webpack_require__(248);
 	var parseuri = __webpack_require__(227);
-	var parsejson = __webpack_require__(263);
-	var parseqs = __webpack_require__(256);
+	var parsejson = __webpack_require__(262);
+	var parseqs = __webpack_require__(255);
 
 	/**
 	 * Module exports.
@@ -27602,8 +27598,8 @@
 
 	var XMLHttpRequest = __webpack_require__(243);
 	var XHR = __webpack_require__(245);
-	var JSONP = __webpack_require__(259);
-	var websocket = __webpack_require__(260);
+	var JSONP = __webpack_require__(258);
+	var websocket = __webpack_require__(259);
 
 	/**
 	 * Export transports.
@@ -27729,8 +27725,8 @@
 
 	var XMLHttpRequest = __webpack_require__(243);
 	var Polling = __webpack_require__(246);
-	var Emitter = __webpack_require__(255);
-	var inherit = __webpack_require__(257);
+	var Emitter = __webpack_require__(232);
+	var inherit = __webpack_require__(256);
 	var debug = __webpack_require__(228)('engine.io-client:polling-xhr');
 
 	/**
@@ -28148,10 +28144,10 @@
 	 */
 
 	var Transport = __webpack_require__(247);
-	var parseqs = __webpack_require__(256);
+	var parseqs = __webpack_require__(255);
 	var parser = __webpack_require__(248);
-	var inherit = __webpack_require__(257);
-	var yeast = __webpack_require__(258);
+	var inherit = __webpack_require__(256);
+	var yeast = __webpack_require__(257);
 	var debug = __webpack_require__(228)('engine.io-client:polling');
 
 	/**
@@ -28399,7 +28395,7 @@
 	 */
 
 	var parser = __webpack_require__(248);
-	var Emitter = __webpack_require__(255);
+	var Emitter = __webpack_require__(232);
 
 	/**
 	 * Module exports.
@@ -29698,175 +29694,6 @@
 
 /***/ }),
 /* 255 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	
-	/**
-	 * Expose `Emitter`.
-	 */
-
-	if (true) {
-	  module.exports = Emitter;
-	}
-
-	/**
-	 * Initialize a new `Emitter`.
-	 *
-	 * @api public
-	 */
-
-	function Emitter(obj) {
-	  if (obj) return mixin(obj);
-	};
-
-	/**
-	 * Mixin the emitter properties.
-	 *
-	 * @param {Object} obj
-	 * @return {Object}
-	 * @api private
-	 */
-
-	function mixin(obj) {
-	  for (var key in Emitter.prototype) {
-	    obj[key] = Emitter.prototype[key];
-	  }
-	  return obj;
-	}
-
-	/**
-	 * Listen on the given `event` with `fn`.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.on =
-	Emitter.prototype.addEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-	  (this._callbacks['$' + event] = this._callbacks['$' + event] || [])
-	    .push(fn);
-	  return this;
-	};
-
-	/**
-	 * Adds an `event` listener that will be invoked a single
-	 * time then automatically removed.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.once = function(event, fn){
-	  function on() {
-	    this.off(event, on);
-	    fn.apply(this, arguments);
-	  }
-
-	  on.fn = fn;
-	  this.on(event, on);
-	  return this;
-	};
-
-	/**
-	 * Remove the given callback for `event` or all
-	 * registered callbacks.
-	 *
-	 * @param {String} event
-	 * @param {Function} fn
-	 * @return {Emitter}
-	 * @api public
-	 */
-
-	Emitter.prototype.off =
-	Emitter.prototype.removeListener =
-	Emitter.prototype.removeAllListeners =
-	Emitter.prototype.removeEventListener = function(event, fn){
-	  this._callbacks = this._callbacks || {};
-
-	  // all
-	  if (0 == arguments.length) {
-	    this._callbacks = {};
-	    return this;
-	  }
-
-	  // specific event
-	  var callbacks = this._callbacks['$' + event];
-	  if (!callbacks) return this;
-
-	  // remove all handlers
-	  if (1 == arguments.length) {
-	    delete this._callbacks['$' + event];
-	    return this;
-	  }
-
-	  // remove specific handler
-	  var cb;
-	  for (var i = 0; i < callbacks.length; i++) {
-	    cb = callbacks[i];
-	    if (cb === fn || cb.fn === fn) {
-	      callbacks.splice(i, 1);
-	      break;
-	    }
-	  }
-	  return this;
-	};
-
-	/**
-	 * Emit `event` with the given args.
-	 *
-	 * @param {String} event
-	 * @param {Mixed} ...
-	 * @return {Emitter}
-	 */
-
-	Emitter.prototype.emit = function(event){
-	  this._callbacks = this._callbacks || {};
-	  var args = [].slice.call(arguments, 1)
-	    , callbacks = this._callbacks['$' + event];
-
-	  if (callbacks) {
-	    callbacks = callbacks.slice(0);
-	    for (var i = 0, len = callbacks.length; i < len; ++i) {
-	      callbacks[i].apply(this, args);
-	    }
-	  }
-
-	  return this;
-	};
-
-	/**
-	 * Return array of callbacks for `event`.
-	 *
-	 * @param {String} event
-	 * @return {Array}
-	 * @api public
-	 */
-
-	Emitter.prototype.listeners = function(event){
-	  this._callbacks = this._callbacks || {};
-	  return this._callbacks['$' + event] || [];
-	};
-
-	/**
-	 * Check if this emitter has `event` handlers.
-	 *
-	 * @param {String} event
-	 * @return {Boolean}
-	 * @api public
-	 */
-
-	Emitter.prototype.hasListeners = function(event){
-	  return !! this.listeners(event).length;
-	};
-
-
-/***/ }),
-/* 256 */
 /***/ (function(module, exports) {
 
 	/**
@@ -29909,7 +29736,7 @@
 
 
 /***/ }),
-/* 257 */
+/* 256 */
 /***/ (function(module, exports) {
 
 	
@@ -29921,7 +29748,7 @@
 	};
 
 /***/ }),
-/* 258 */
+/* 257 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -29995,7 +29822,7 @@
 
 
 /***/ }),
-/* 259 */
+/* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {
@@ -30004,7 +29831,7 @@
 	 */
 
 	var Polling = __webpack_require__(246);
-	var inherit = __webpack_require__(257);
+	var inherit = __webpack_require__(256);
 
 	/**
 	 * Module exports.
@@ -30233,7 +30060,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 260 */
+/* 259 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -30242,15 +30069,15 @@
 
 	var Transport = __webpack_require__(247);
 	var parser = __webpack_require__(248);
-	var parseqs = __webpack_require__(256);
-	var inherit = __webpack_require__(257);
-	var yeast = __webpack_require__(258);
+	var parseqs = __webpack_require__(255);
+	var inherit = __webpack_require__(256);
+	var yeast = __webpack_require__(257);
 	var debug = __webpack_require__(228)('engine.io-client:websocket');
 	var BrowserWebSocket = global.WebSocket || global.MozWebSocket;
 	var NodeWebSocket;
 	if (typeof window === 'undefined') {
 	  try {
-	    NodeWebSocket = __webpack_require__(261);
+	    NodeWebSocket = __webpack_require__(260);
 	  } catch (e) { }
 	}
 
@@ -30526,13 +30353,13 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 261 */
+/* 260 */
 /***/ (function(module, exports) {
 
 	/* (ignored) */
 
 /***/ }),
-/* 262 */
+/* 261 */
 /***/ (function(module, exports) {
 
 	
@@ -30547,7 +30374,7 @@
 	};
 
 /***/ }),
-/* 263 */
+/* 262 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {/**
@@ -30585,7 +30412,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 264 */
+/* 263 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	
@@ -30595,11 +30422,11 @@
 
 	var parser = __webpack_require__(231);
 	var Emitter = __webpack_require__(232);
-	var toArray = __webpack_require__(265);
-	var on = __webpack_require__(266);
-	var bind = __webpack_require__(267);
+	var toArray = __webpack_require__(264);
+	var on = __webpack_require__(265);
+	var bind = __webpack_require__(266);
 	var debug = __webpack_require__(228)('socket.io-client:socket');
-	var parseqs = __webpack_require__(256);
+	var parseqs = __webpack_require__(255);
 
 	/**
 	 * Module exports.
@@ -31009,7 +30836,7 @@
 
 
 /***/ }),
-/* 265 */
+/* 264 */
 /***/ (function(module, exports) {
 
 	module.exports = toArray
@@ -31028,7 +30855,7 @@
 
 
 /***/ }),
-/* 266 */
+/* 265 */
 /***/ (function(module, exports) {
 
 	
@@ -31058,7 +30885,7 @@
 
 
 /***/ }),
-/* 267 */
+/* 266 */
 /***/ (function(module, exports) {
 
 	/**
@@ -31087,7 +30914,7 @@
 
 
 /***/ }),
-/* 268 */
+/* 267 */
 /***/ (function(module, exports) {
 
 	
@@ -31178,7 +31005,7 @@
 
 
 /***/ }),
-/* 269 */
+/* 268 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -31189,71 +31016,80 @@
 
 	var _redux = __webpack_require__(198);
 
-	var _inventory = __webpack_require__(270);
+	var _inventory = __webpack_require__(269);
 
 	var _inventory2 = _interopRequireDefault(_inventory);
 
-	var _cart = __webpack_require__(271);
+	var _cart = __webpack_require__(270);
 
 	var _cart2 = _interopRequireDefault(_cart);
+
+	var _user = __webpack_require__(271);
+
+	var _user2 = _interopRequireDefault(_user);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.default = (0, _redux.combineReducers)({
 		inventory: _inventory2.default,
-		cart: _cart2.default
+		cart: _cart2.default,
+		user: _user2.default
 	});
 
 	 ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/index.js"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/index.js"); } } })();
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 270 */
+/* 269 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
-		value: true
+	  value: true
 	});
 	exports.getInventory = getInventory;
 	exports.getProduct = getProduct;
-	var initialState = {
-		inventory: [] // array of product ids
-	};
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	// nothing to do here, but we need products node in redux store
-
 	exports.default = function () {
-		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
-		var action = arguments[1];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	  var action = arguments[1];
 
-		switch (action.type) {
-			default:
-				return state;
-		}
+	  switch (action.type) {
+	    case 'SET_STATE':
+	      return [].concat(_toConsumableArray(action.response.inventory));
+	    case 'SET_INVENTORY':
+	      console.log(action.response);
+	      debugger;
+	      return [].concat(_toConsumableArray(action.response));
+	    default:
+	      return state;
+	  }
 	};
 
 	// selectors
 
 
 	function getInventory(state, props) {
-		return state.inventory;
+	  return state.inventory;
 	}
 
 	function getProduct(state, props) {
-		var product = state.inventory.find(function (item) {
-			return item.id === props.id;
-		});
-		product.quantity = props.quantity;
-		return product;
+	  var product = state.inventory.find(function (item) {
+	    return item.id === props.id;
+	  });
+	  product.quantity = props.quantity;
+	  return product;
 	}
 
 	 ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/inventory.js"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/inventory.js"); } } })();
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 271 */
+/* 270 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -31270,7 +31106,7 @@
 	exports.getTotal = getTotal;
 	exports.numberInCart = numberInCart;
 
-	var _inventory = __webpack_require__(270);
+	var _inventory = __webpack_require__(269);
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -31285,20 +31121,20 @@
 
 	    switch (action.type) {
 	        case 'CART_ADD':
-	            if (isInCart({ cart: state }, { id: action.payload.productId })) {
+	            if (isInCart({ cart: state }, { id: action.response.productId })) {
 	                return _extends({}, state, {
 	                    items: state.items.map(function (item) {
-	                        return item.id === action.payload.productId ? _extends({}, item, { quantity: item.quantity + action.payload.quantity }) : item;
+	                        return item.id === action.response.productId ? _extends({}, item, { quantity: item.quantity + action.response.quantity }) : item;
 	                    })
 	                });
 	            }
 	            return _extends({}, state, {
-	                items: [].concat(_toConsumableArray(state.items), [{ id: action.payload.productId, quantity: action.payload.quantity }])
+	                items: [].concat(_toConsumableArray(state.items), [{ id: action.response.productId, quantity: action.response.quantity }])
 	            });
 	        case 'CART_REMOVE':
 	            return _extends({}, state, {
 	                items: state.items.filter(function (item) {
-	                    return item.id !== action.payload.productId;
+	                    return item.id !== action.response.productId;
 	                })
 	            });
 	        case 'CART_CLEAR':
@@ -31346,6 +31182,34 @@
 	}
 
 	 ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/cart.js"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/cart.js"); } } })();
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+/* 271 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+	// nothing to do here, but we need products node in redux store
+	exports.default = function () {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+	  var action = arguments[1];
+
+	  switch (action.type) {
+	    case 'SET_CLIENT_ID':
+	      return [].concat(_toConsumableArray(action.response));
+	    default:
+	      return state;
+	  }
+	};
+
+	 ;(function register() { /* react-hot-loader/webpack */ if (process.env.NODE_ENV !== 'production') { if (typeof __REACT_HOT_LOADER__ === 'undefined') { return; } if (typeof module.exports === 'function') { __REACT_HOT_LOADER__.register(module.exports, 'module.exports', "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/user.js"); return; } for (var key in module.exports) { if (!Object.prototype.hasOwnProperty.call(module.exports, key)) { continue; } var namedExport = void 0; try { namedExport = module.exports[key]; } catch (err) { continue; } __REACT_HOT_LOADER__.register(namedExport, key, "/Users/koh/Documents/Development/Prototype/project-s/src/reducers/user.js"); } } })();
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
@@ -31730,9 +31594,9 @@
 
 	var _Inventory2 = _interopRequireDefault(_Inventory);
 
-	var _inventory = __webpack_require__(270);
+	var _inventory = __webpack_require__(269);
 
-	var _cart = __webpack_require__(271);
+	var _cart = __webpack_require__(270);
 
 	var _actions = __webpack_require__(292);
 
@@ -31841,6 +31705,7 @@
 				    toggleCart = _props.toggleCart;
 
 
+				console.log(inventory);
 				return _react2.default.createElement(
 					'div',
 					{ className: 'inventory' },
@@ -31889,7 +31754,7 @@
 
 	var _actions = __webpack_require__(292);
 
-	var _cart = __webpack_require__(271);
+	var _cart = __webpack_require__(270);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32535,10 +32400,29 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	exports.setClientId = setClientId;
+	exports.setState = setState;
+	function setClientId(clientId) {
+	  return {
+	    type: 'SET_CLIENT_ID',
+	    response: _extends({}, clientId)
+	  };
+	}
+
+	function setState(state) {
+	  return {
+	    type: 'SET_STATE',
+	    response: _extends({}, state)
+	  };
+	}
+
 	var addToCart = exports.addToCart = function addToCart(productId, quantity) {
 	  return {
 	    type: 'CART_ADD',
-	    payload: {
+	    response: {
 	      productId: productId,
 	      quantity: quantity
 	    }
@@ -32548,7 +32432,7 @@
 	var removeFromCart = exports.removeFromCart = function removeFromCart(productId) {
 	  return {
 	    type: 'CART_REMOVE',
-	    payload: {
+	    response: {
 	      productId: productId
 	    }
 	  };

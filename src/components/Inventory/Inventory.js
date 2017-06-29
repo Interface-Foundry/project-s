@@ -8,6 +8,7 @@ class Inventory extends Component {
 
 		const { inventory, open, numberInCart, addToCart, toggleCart } = this.props;
     
+    console.log(inventory)
 		return (
 			<div className='inventory'>
 				<InventoryList 

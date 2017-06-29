@@ -1,6 +1,16 @@
 // nothing to do here, but we need products node in redux store
 export default (state = [], action) => {
 	switch (action.type) {
+    case 'SET_STATE':
+      return [
+        ...action.response.inventory
+      ]
+    case 'SET_INVENTORY':
+      console.log(action.response)
+      debugger
+      return [
+        ...action.response
+      ]
 		default:
 			return state
 	}
