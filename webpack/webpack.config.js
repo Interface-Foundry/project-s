@@ -4,7 +4,9 @@ const path = require('path');
 const assetsPath = path.resolve(__dirname, '../public');
 
 module.exports = {
+  devtool: '#cheap-module-eval-source-map',
   entry: [
+    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr',
     './src/index.js'
   ],
   module: {
@@ -12,7 +14,7 @@ module.exports = {
       {
         test: /\.(jsx|js)?$/,
         exclude: /node_modules/,
-        loader: 'react-hot-loader/webpack!babel'
+        loader: 'react-hot/webpack!babel'
       },
       {
         test: /\.json$/,
@@ -25,18 +27,24 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  ],
+  engines: {
+    node: "4.x"
+  },
   resolve: {
     extensions: ['', '.js', '.jsx', '.json']
   },
   output: {
     path: assetsPath,
-    publicPath: '/',
+    publicPath: '/public/',
     filename: 'bundle.js'
   },
   devServer: {
     contentBase: assetsPath,
     historyApiFallback: true,
     hot: true
-  },
-  plugins: []
+  }
 };
