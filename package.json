@@ -1,10 +1,10 @@
 {
-  "name": "stride-test",
+  "name": "Project-s",
   "version": "0.1.0",
   "homepage": "",
   "private": true,
   "scripts": {
-    "start": "webpack --progress --config webpack/webpack.config.js && NODE_ENV=development node webpack/webpack-dev-server.js",
+    "start": "webpack --progress --config  webpack/webpack.config.js  && NODE_ENV=development babel-node api/index.js",
     "test": "karma start"
   },
   "babel": {
@@ -48,6 +48,8 @@
   },
   "dependencies": {
     "money": "^0.2.0",
+    "ejs": "^2.5.6",
+    "object-assign": "^4.1.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
@@ -55,7 +57,9 @@
     "redux-logger": "^2.0.1",
     "redux-thunk": "^2.1.0",
     "request": "^2.79.0",
-    "request-promise": "^4.2.1"
+    "socket.io": "^2.0.3",
+    "request-promise": "^4.2.1",
+    "uuid": "^3.1.0"
   },
   "eslintConfig": {
     "extends": "react-app"

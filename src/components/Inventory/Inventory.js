@@ -7,7 +7,8 @@ class Inventory extends Component {
 	render() {
 
 		const { inventory, open, numberInCart, addToCart, toggleCart } = this.props;
-	  
+    
+    console.log(inventory)
 		return (
 			<div className='inventory'>
 				<InventoryList 

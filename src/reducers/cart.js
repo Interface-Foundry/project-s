@@ -8,20 +8,20 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case 'CART_ADD':
-            if(isInCart({cart: state}, {id: action.payload.productId})) {
+            if(isInCart({cart: state}, {id: action.response.productId})) {
                 return {
                     ...state,
-                    items: state.items.map(item => item.id === action.payload.productId ? { ...item, quantity: (item.quantity + action.payload.quantity) } : item)
+                    items: state.items.map(item => item.id === action.response.productId ? { ...item, quantity: (item.quantity + action.response.quantity) } : item)
                 };
             }
             return {
                 ...state,
-                items: [ ...state.items, { id: action.payload.productId, quantity: action.payload.quantity}]
+                items: [ ...state.items, { id: action.response.productId, quantity: action.response.quantity}]
             };
         case 'CART_REMOVE':
             return {
                 ...state,
-                items: state.items.filter(item => item.id !== action.payload.productId)
+                items: state.items.filter(item => item.id !== action.response.productId)
             };
         case 'CART_CLEAR':
             return {

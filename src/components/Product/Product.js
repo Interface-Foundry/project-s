@@ -33,11 +33,11 @@ class Product extends Component {
                 <div className="product__price">${price}</div>
                 <div className="product__button-wrap">
                     <button onClick={this.handleClick}>
-                        Add to cart
+                        Add to Cart
                     </button>
                 </div>
                 <div className="product__quantity-wrap">
-                    <label for='quantity'>Quantity: </label>
+                    <label htmlFor='quantity'>Quantity: </label>
                     <input name='quantity' className="product__quantity" type="number" onChange={this.handleOnChange} value={quantity}/>
                 </div>
             </div>
