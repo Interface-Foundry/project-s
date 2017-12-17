@@ -42,10 +42,5 @@ All test files are in __test__ folders in their respective folders (e.g actions/
 
 Should work on mobile, tablet, and desktop.
 
-## NOTES:
-
-Prototype built for Greylock Investor Seth Rosenberg.
-Purpose is to demonstrate the universal url Item Addition, and make kip feel more like MAGIC!!!
-
 
 
